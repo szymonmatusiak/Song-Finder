@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("search?")
+    @GET("search")
     fun getResponse(@Query("term") name: String): Single<SongListITunes>
 }
