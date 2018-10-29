@@ -14,13 +14,15 @@ import org.junit.Test
 class GetSongsUseCaseTest {
     private lateinit var apiProvider: ApiProvider
     private lateinit var getSongsUseCase: GetSongsUseCase
-    private lateinit var song: Song
+    private lateinit var songITunes: Song
+    private lateinit var songLocal: Song
+
     @Before
     fun setUp() {
         apiProvider = mock()
         getSongsUseCase = GetSongsUseCase(apiProvider)
-        song = Song("eldo", "api", "api", "api", "api", "", SongSource.LOCAL)
-
+        songITunes = Song("eldo", "api", "api", "api", "api", "", SongSource.ITUNES)
+        songLocal = Song("eldo", "local", "local", "local", "local", "", SongSource.LOCAL)
     }
 
     @Test
@@ -33,13 +35,14 @@ class GetSongsUseCaseTest {
     @Test
     fun `getSongs returns one element from localList`() {
         whenever(apiProvider.getSongs("eldo")).thenReturn(Single.just(SongListITunes(0, emptyList())))
+
         val test = getSongsUseCase.getSongs("eldo").map { it.size }.test()
         test.assertValue(1)
     }
 
     @Test
     fun `getSongs returns combined from api and local`() {
-        whenever(apiProvider.getSongs("eldo")).thenReturn(Single.just(SongListITunes(0, listOf(song))))
+        whenever(apiProvider.getSongs("eldo")).thenReturn(Single.just(SongListITunes(0, listOf(songITunes))))
         val test = getSongsUseCase.getSongs("eldo").map { it.size }.test()
         test.assertValue(2)
     }
@@ -48,10 +51,14 @@ class GetSongsUseCaseTest {
     fun `server return error`() {
         whenever(apiProvider.getSongs("eldo")).doAnswer { Single.error(Throwable()) }
         val test = getSongsUseCase.getSongs("eldo").map { it.size }.test()
-        test.assertValue(2)
+        test.assertValue(1)
     }
 
     @Test
-    fun getLocalSongs() {
+    fun `server return error and no local records`() {
+        whenever(apiProvider.getSongs("test")).doAnswer { Single.error(Throwable()) }
+
+        val test = getSongsUseCase.getSongs("test").map { it.size }.test()
+        test.assertValue(0)
     }
 }
