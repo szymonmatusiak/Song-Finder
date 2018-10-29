@@ -36,9 +36,9 @@ class GetSongsUseCase(
     }
 
     fun getLocalSongs() = listOf(
-        Song("p", "local", "local", "local", "local", "local", SongSource.LOCAL),
-        Song("p", "local1", "local1", "local1", "local", "local", SongSource.LOCAL),
-        Song("madonna", "local", "local", "local", "local", "local", SongSource.LOCAL)
+        Song("p", "local", "local", "local", "local", "", SongSource.LOCAL),
+        Song("p", "local1", "local1", "local", "local", "", SongSource.LOCAL),
+        Song("madonna", "local", "local", "local", "local", "", SongSource.LOCAL)
     )
 
 }

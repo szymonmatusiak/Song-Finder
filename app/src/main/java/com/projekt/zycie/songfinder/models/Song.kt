@@ -9,8 +9,8 @@ data class Song(
     val artistName: String,
     val collectionName: String,
     val trackName: String,
-    val collectionArtistName: String,
     val releaseDate: String,
     val primaryGenreName: String,
+    val artworkUrl100: String,
     var songSource: SongSource
 ) : Parcelable
