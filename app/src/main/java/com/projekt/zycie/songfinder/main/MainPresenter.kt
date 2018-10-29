@@ -5,7 +5,7 @@ import com.projekt.zycie.songfinder.base.BasePresenter
 import com.projekt.zycie.songfinder.utils.SchedulersProvider
 
 class MainPresenter(
-    private val mainUseCase: MainUseCase,
+    private val mainUseCase: GetSongsUseCase,
     private val schedulersProvider: SchedulersProvider
 ) : BasePresenter<MainView>() {
 
@@ -18,16 +18,16 @@ class MainPresenter(
     }
 
     @SuppressLint("CheckResult")
-    fun test() {
-        mainUseCase.getResponse("eldo")
+    fun getSongsByArtist(artist: String) {
+        mainUseCase.getSongs(artist)
             .subscribeOn(schedulersProvider.backgroundThread())
             .observeOn(schedulersProvider.mainThread())
             .subscribe(
                 {
-                    view?.test(it.resultCount.toString())
+                    view?.setSongs(it)
                 },
                 {
-                    view?.test(it.toString())
+                    view?.showError(it.toString())
                 }
             )
     }
