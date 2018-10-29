@@ -17,7 +17,7 @@ class GetSongsUseCase(
             .getSongs(name)
             .map { setSourceITunes(it).results }
             .onErrorResumeNext { Single.just(emptyList()) }
-        val filterLocalSongs = getLocalSongs().filter { it.artistName.contains(name) }
+        val filterLocalSongs = getLocalSongs().filter { it.artistName.toLowerCase().contains(name.toLowerCase()) }
         val single = Single.just(filterLocalSongs)
         return zip(
             songsApi,
