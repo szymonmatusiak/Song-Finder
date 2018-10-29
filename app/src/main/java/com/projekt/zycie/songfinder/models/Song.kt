@@ -10,5 +10,5 @@ data class Song(
     val collectionArtistName: String,
     val releaseDate: String,
     val primaryGenreName: String,
-    val songSource: SongSource = SongSource.ITUNES
+    var songSource: SongSource
 )
