@@ -14,7 +14,7 @@ object ApiProvider {
     private val logging = HttpLoggingInterceptor()
 
     init {
-        logging.level = HttpLoggingInterceptor.Level.BASIC
+        logging.level = HttpLoggingInterceptor.Level.BODY
 
         var okHttpClient = OkHttpClient.Builder()
             .addInterceptor(logging)
@@ -30,6 +30,6 @@ object ApiProvider {
         service = retrofit.create(ApiService::class.java)
     }
 
-    fun getResponse(name: String) = service.getResponse(name)
+    fun getSongs(name: String) = service.getResponse(name)
 
 }
