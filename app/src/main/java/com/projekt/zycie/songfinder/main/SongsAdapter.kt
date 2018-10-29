@@ -6,7 +6,8 @@ import com.projekt.zycie.songfinder.models.Song
 
 class SongsAdapter(
     private val songs: List<Song>,
-    private val songClickListener: SongClickListener) : RecyclerView.Adapter<SongViewHolder>() {
+    private val songClickListener: SongClickListener
+) : RecyclerView.Adapter<SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongViewHolder.createViewHolder(parent)
 

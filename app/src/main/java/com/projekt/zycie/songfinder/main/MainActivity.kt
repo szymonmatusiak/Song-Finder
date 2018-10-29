@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView
 import android.widget.SearchView
 import android.widget.Toast
 import com.projekt.zycie.songfinder.R
+import com.projekt.zycie.songfinder.details.DetailsActivity
 import com.projekt.zycie.songfinder.models.Song
 import com.projekt.zycie.songfinder.utils.ApiProvider
 import com.projekt.zycie.songfinder.utils.SchedulersProvider
 import kotterknife.bindView
 
 class MainActivity : AppCompatActivity(), MainView, SongClickListener {
+
     private val searchView: SearchView by bindView(R.id.search)
     private val recyclerView: RecyclerView by bindView(R.id.recycler_view_songs)
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -41,6 +43,10 @@ class MainActivity : AppCompatActivity(), MainView, SongClickListener {
 
     }
 
+    override fun showSongDetalis(song: Song) {
+        presenter.openDetailsActivity(song)
+    }
+
     override fun setSongs(songs: List<Song>) {
         viewManager = LinearLayoutManager(this)
         viewAdapter = SongsAdapter(songs!!, this)
@@ -55,4 +61,7 @@ class MainActivity : AppCompatActivity(), MainView, SongClickListener {
         Toast.makeText(this, error, Toast.LENGTH_LONG)
     }
 
+    override fun openDetailsActivity(song: Song) {
+        startActivity(DetailsActivity.getIntent(this, song))
+    }
 }

@@ -2,6 +2,7 @@ package com.projekt.zycie.songfinder.main
 
 import android.annotation.SuppressLint
 import com.projekt.zycie.songfinder.base.BasePresenter
+import com.projekt.zycie.songfinder.models.Song
 import com.projekt.zycie.songfinder.utils.SchedulersProvider
 
 class MainPresenter(
@@ -30,5 +31,9 @@ class MainPresenter(
                     view?.showError(it.toString())
                 }
             )
+    }
+
+    fun openDetailsActivity(song: Song) {
+        view?.openDetailsActivity(song)
     }
 }
