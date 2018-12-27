@@ -7,24 +7,31 @@ import android.support.v7.widget.RecyclerView
 import android.widget.SearchView
 import android.widget.Toast
 import com.projekt.zycie.songfinder.R
+import com.projekt.zycie.songfinder.dagger.DaggerAppComponent
+import com.projekt.zycie.songfinder.dagger.PresenterModule
 import com.projekt.zycie.songfinder.details.DetailsActivity
 import com.projekt.zycie.songfinder.models.Song
-import com.projekt.zycie.songfinder.utils.ApiProvider
-import com.projekt.zycie.songfinder.utils.SchedulersProvider
 import kotterknife.bindView
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainView, SongClickListener {
+
+    @Inject
+    lateinit var presenter: MainPresenter
 
     private val searchView: SearchView by bindView(R.id.search)
     private val recyclerView: RecyclerView by bindView(R.id.recycler_view_songs)
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerAppComponent
+            .builder()
+            .presenterModule(PresenterModule())
+            .build()
+            .inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainPresenter(GetSongsUseCase(ApiProvider), SchedulersProvider())
     }
 
     override fun onStart() {
@@ -35,12 +42,10 @@ class MainActivity : AppCompatActivity(), MainView, SongClickListener {
                 presenter.getSongsByArtist(query!!)
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
-
     }
 
     override fun showSongDetalis(song: Song) {
