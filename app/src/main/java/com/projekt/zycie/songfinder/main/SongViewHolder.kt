@@ -28,7 +28,7 @@ class SongViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         holder.setBackgroundColor(holder.context.resources.getColor(song.songSource.color))
         artistName.text = song.artistName
         trackName.text = song.trackName
-        source.text = song.songSource.source//.toString()//song.songSource.value
+        source.text = song.songSource.source
         holder.setOnClickListener { songClickListener.showSongDetalis(song) }
     }
 }

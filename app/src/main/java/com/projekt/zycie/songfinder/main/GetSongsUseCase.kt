@@ -7,11 +7,10 @@ import com.projekt.zycie.songfinder.utils.SongSource
 import io.reactivex.Single
 import io.reactivex.Single.zip
 import io.reactivex.functions.BiFunction
+import javax.inject.Inject
 
-class GetSongsUseCase(
-    private val apiProvider: ApiProvider
-) {
-
+class GetSongsUseCase @Inject constructor(private val apiProvider: ApiProvider)
+{
     fun getSongs(name: String): Single<List<Song>> {
         val songsApi = apiProvider
             .getSongs(name)

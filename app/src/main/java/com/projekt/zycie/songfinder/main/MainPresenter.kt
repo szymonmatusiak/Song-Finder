@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import com.projekt.zycie.songfinder.base.BasePresenter
 import com.projekt.zycie.songfinder.models.Song
 import com.projekt.zycie.songfinder.utils.SchedulersProvider
+import javax.inject.Inject
 
-class MainPresenter(
+class MainPresenter @Inject constructor(
     private val mainUseCase: GetSongsUseCase,
-    private val schedulersProvider: SchedulersProvider
-) : BasePresenter<MainView>() {
+    private val schedulersProvider: SchedulersProvider) : BasePresenter<MainView>() {
 
     fun onStart(mainView: MainView) {
         attachView(mainView)
